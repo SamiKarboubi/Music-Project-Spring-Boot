@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class AuthController{
+public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
@@ -25,9 +25,6 @@ public class AuthController{
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public AuthController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @GetMapping("/login")
     public String showLoginForm(){
@@ -54,7 +51,7 @@ public class AuthController{
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.ROLE_USER);
         userRepository.save(user);
-        return "redirect:/";
+        return "redirect:/login";
     }
 
     @GetMapping("/register/artist")

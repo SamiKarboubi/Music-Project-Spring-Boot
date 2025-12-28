@@ -1,10 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Chansons | Admin | MusicProject</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #1a1a2e, #16213e);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+        }
+        .table {
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .table thead {
+            background-color: rgba(0,0,0,0.3);
+        }
+        .table tbody tr:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+    </style>
 </head>
 <body>
-$END$
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/admin/dashboard}">🎵 MusicProject Admin</a>
+        <div class="ms-auto">
+            <a th:href="@{/admin/dashboard}" class="btn btn-sm btn-outline-light me-2">📊 Dashboard</a>
+            <a th:href="@{/logout}" class="btn btn-sm btn-outline-light">🚪 Déconnexion</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h2 class="mb-4">🎵 Liste des Chansons</h2>
+
+    <form th:action="@{/admin/song}" method="get" class="row mb-4">
+        <div class="col-md-4">
+            <input type="text" name="search" th:value="${keyword}" class="form-control" placeholder="Rechercher...">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">🔍 Rechercher</button>
+        </div>
+        <div class="col-md-6 text-end">
+            <a class="btn btn-success" th:href="@{/admin/song/add}">➕ Ajouter une chanson</a>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table class="table table-dark table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Artiste</th>
+                <th>Album</th>
+                <th>Genre</th>
+                <th>Durée (sec)</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="s : ${songs}">
+                <td th:text="${s.id}"></td>
+                <td th:text="${s.name}"></td>
+                <td th:text="${s.artist != null ? s.artist.username : 'N/A'}"></td>
+                <td th:text="${s.album != null ? s.album.name : 'N/A'}"></td>
+                <td th:text="${s.genre != null ? s.genre : 'N/A'}"></td>
+                <td th:text="${s.durationInSeconds}"></td>
+                <td>
+                    <a th:href="@{'/admin/song/info/' + ${s.id}}" class="btn btn-info btn-sm">ℹ️ Info</a>
+                    <a th:href="@{'/admin/song/edit/' + ${s.id}}" class="btn btn-warning btn-sm">✏️ Modifier</a>
+                    <a th:href="@{'/admin/song/delete/' + ${s.id}}" class="btn btn-danger btn-sm"
+                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette chanson ?')">🗑️ Supprimer</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:each="p : ${pages}">
+                <a class="page-link" th:classappend="${p == page} ? 'active'"
+                   th:href="@{/admin/song(page=${p}, search=${keyword})}"
+                   th:text="${p + 1}">
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

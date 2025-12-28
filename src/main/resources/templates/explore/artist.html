@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${artist != null ? artist.username : 'Artiste'} + ' | MusicProject'">Artiste | MusicProject</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #141e30, #243b55);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+        }
+        .artist-header {
+            background-color: rgba(255,255,255,0.08);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .album-card, .song-card {
+            background-color: rgba(255,255,255,0.08);
+            border: none;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+        .album-card:hover, .song-card:hover {
+            transform: translateY(-4px);
+            background-color: rgba(255,255,255,0.15);
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">🎵 MusicProject</a>
+        <div class="ms-auto">
+            <a th:href="@{/explore/results}" class="btn btn-sm btn-outline-light">🔍 Rechercher</a>
+            <a th:href="@{/logout}" class="btn btn-sm btn-outline-light ms-2">🚪 Déconnexion</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5" th:if="${artist != null}">
+    <div class="artist-header">
+        <h1 th:text="${artist.username}">Nom Artiste</h1>
+        <p class="text-muted" th:if="${artist.bio != null}" th:text="${artist.bio}">Bio</p>
+        <div class="mt-3">
+            <span class="badge bg-info me-2" th:text="${#lists.size(artist.albums)} + ' album(s)'">0 album(s)</span>
+            <span class="badge bg-info" th:text="${#lists.size(artist.songs)} + ' chanson(s)'">0 chanson(s)</span>
+        </div>
+        <div class="mt-3" th:if="${#authentication != null and #strings.contains(#authentication.authorities.toString(), 'ROLE_USER')}">
+            <a th:href="@{'/user/addfollowings/' + ${artist.id}}" class="btn btn-success">➕ Suivre cet artiste</a>
+        </div>
+    </div>
+    
+    <h3 class="mb-4">📀 Albums</h3>
+    <div class="row" th:if="${albums != null and !albums.isEmpty()}">
+        <div class="col-md-4 mb-4" th:each="album : ${albums}">
+            <div class="card album-card h-100">
+                <div class="card-body">
+                    <h5 th:text="${album.name}">Nom Album</h5>
+                    <p class="text-muted" th:if="${album.releaseDate != null}">
+                        <span th:text="${#temporals.format(album.releaseDate, 'yyyy')}"></span>
+                    </p>
+                    <p class="text-muted" th:text="${#lists.size(album.songs)} + ' chanson(s)'">0 chanson(s)</p>
+                    <a th:href="@{'/explore/album/' + ${album.id}}" class="btn btn-outline-info btn-sm">Voir l'album</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-info" th:if="${albums == null or albums.isEmpty()}">
+        <p>Cet artiste n'a pas encore d'albums.</p>
+    </div>
+    
+    <h3 class="mb-4 mt-5">🎵 Chansons</h3>
+    <div class="row" th:if="${songs != null and !songs.isEmpty()}">
+        <div class="col-md-6 mb-3" th:each="song : ${songs}">
+            <div class="card song-card">
+                <div class="card-body">
+                    <h5 th:text="${song.name}">Nom Chanson</h5>
+                    <p class="text-muted mb-0" th:if="${song.album != null}" th:text="${song.album.name}">Album</p>
+                    <p class="text-muted mb-0" th:text="${song.genre}">Genre</p>
+                    <audio controls class="w-100 mt-2" th:if="${song.audioPath != null}" th:src="@{${song.audioPath}}"></audio>
+                    <div class="mt-2">
+                        <a th:href="@{'/explore/song/' + ${song.id}}" class="btn btn-outline-info btn-sm">Voir détails</a>
+                        <a th:href="@{'/user/likedSongs/' + ${song.id}}" class="btn btn-outline-success btn-sm" 
+                           th:if="${#authentication != null and #strings.contains(#authentication.authorities.toString(), 'ROLE_USER')}">💚 J'aime</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-info" th:if="${songs == null or songs.isEmpty()}">
+        <p>Cet artiste n'a pas encore de chansons.</p>
+    </div>
+</div>
+
+<div class="container mt-5" th:if="${artist == null}">
+    <div class="alert alert-danger">
+        <p>Artiste introuvable.</p>
+        <a th:href="@{/explore/results}" class="btn btn-primary">Retour à la recherche</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

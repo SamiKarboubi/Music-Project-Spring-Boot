@@ -5,13 +5,16 @@ import com.example.musicproject.dao.entities.User;
 import com.example.musicproject.dao.repositories.ArtistRepository;
 import com.example.musicproject.dao.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-
-public class CostumUserDetailsService implements UserDetailsService {
+@Service
+public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
@@ -20,20 +23,24 @@ public class CostumUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+
         User user = userRepository.findByUsername(username);
         if(user != null){
+            GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
             return new org.springframework.security.core.userdetails.User(
                     user.getUsername(),
                     user.getPassword(),
-                    Collections.singleton(()->user.getRole().name())
+                    Collections.singleton(authority)
             );
         }
+
         Artist artist = artistRepository.findByUsername(username);
         if(artist != null){
+            GrantedAuthority authority = new SimpleGrantedAuthority(artist.getRole().name());
             return new org.springframework.security.core.userdetails.User(
                     artist.getUsername(),
                     artist.getPassword(),
-                    Collections.singleton(()->artist.getRole().name())
+                    Collections.singleton(authority)
             );
         }
         throw new UsernameNotFoundException("User not found");

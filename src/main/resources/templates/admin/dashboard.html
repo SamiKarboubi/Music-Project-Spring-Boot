@@ -1,10 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin | MusicProject</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #1a1a2e, #16213e);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+        }
+        .dashboard-card {
+            background-color: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255,255,255,0.15);
+        }
+    </style>
 </head>
 <body>
-$END$
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/admin/dashboard}">🎵 MusicProject Admin</a>
+        <div class="ms-auto">
+            <a th:href="@{/logout}" class="btn btn-sm btn-outline-light">🚪 Déconnexion</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-5">
+    <h1 class="text-center mb-5">📊 Dashboard Administrateur</h1>
+    <p class="text-center text-muted mb-5">Gérez tous les aspects de la plateforme</p>
+
+    <div class="row g-4 mt-3">
+        <div class="col-md-4">
+            <div class="card dashboard-card h-100 text-center">
+                <div class="card-body">
+                    <h3 class="card-title">👥 Users</h3>
+                    <p class="text-muted">Gérer tous les utilisateurs de la plateforme</p>
+                    <a th:href="@{/admin/user}" class="btn btn-primary">Gérer les Utilisateurs</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card dashboard-card h-100 text-center">
+                <div class="card-body">
+                    <h3 class="card-title">🎤 Artists</h3>
+                    <p class="text-muted">Gérer les informations des artistes</p>
+                    <a th:href="@{/admin/artist}" class="btn btn-primary">Gérer les Artistes</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card dashboard-card h-100 text-center">
+                <div class="card-body">
+                    <h3 class="card-title">🎵 Songs</h3>
+                    <p class="text-muted">Gérer la bibliothèque musicale</p>
+                    <a th:href="@{/admin/song}" class="btn btn-primary">Gérer les Chansons</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card dashboard-card h-100 text-center">
+                <div class="card-body">
+                    <h3 class="card-title">🎼 Playlists</h3>
+                    <p class="text-muted">Gérer les playlists des utilisateurs</p>
+                    <a th:href="@{/admin/playlist}" class="btn btn-primary">Gérer les Playlists</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card dashboard-card h-100 text-center">
+                <div class="card-body">
+                    <h3 class="card-title">📀 Albums</h3>
+                    <p class="text-muted">Gérer les albums musicaux</p>
+                    <a th:href="@{/admin/album}" class="btn btn-primary">Gérer les Albums</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

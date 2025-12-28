@@ -1,4 +1,7 @@
 package com.example.musicproject.dao.entities;
 
-public class Role {
+public enum Role {
+    ROLE_USER,
+    ROLE_ADMIN,
+    ROLE_ARTIST
 }

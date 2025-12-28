@@ -1,10 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicProject 🎵</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background: linear-gradient(to right, #1e1e2f, #2c2c54);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar {
+            background-color: rgba(0,0,0,0.3);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 120px 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .hero p {
+            color: #cfcfcf;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        .btn-custom {
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .btn-login {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+        .btn-login:hover {
+            background-color: #0b5ed7;
+        }
+
+        .btn-register {
+            background-color: #198754;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .btn-register:hover {
+            background-color: #157347;
+        }
+
+        footer {
+            background-color: rgba(0,0,0,0.4);
+            padding: 20px 0;
+            text-align: center;
+            color: #ccc;
+            margin-top: 80px;
+        }
+
+        .features {
+            margin-top: 80px;
+        }
+
+        .feature-card {
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 30px;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255,255,255,0.15);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            color: #0dcaf0;
+        }
+    </style>
 </head>
 <body>
-$END$
+
+<!-- 🌐 Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-4" href="/">🎧 MusicProject</a>
+        <div class="ms-auto">
+            <a href="/login" class="btn btn-sm btn-outline-light me-2">Connexion</a>
+            <a href="/register" class="btn btn-sm btn-success">Créer un compte</a>
+        </div>
+    </div>
+</nav>
+
+<!-- 🎵 Section principale -->
+<section class="hero">
+    <div class="container">
+        <h1>Écoutez, partagez et créez votre univers musical 🎶</h1>
+        <p>Rejoignez la plateforme qui connecte artistes et auditeurs autour de la passion de la musique.</p>
+        <div>
+            <a href="/login" class="btn btn-custom btn-login">Se connecter</a>
+            <a href="/register" class="btn btn-custom btn-register">Créer un compte</a>
+        </div>
+    </div>
+</section>
+
+<!-- 🌟 Fonctionnalités -->
+<section class="features container">
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon mb-3">🎤</div>
+                <h4>Pour les artistes</h4>
+                <p>Publiez vos albums, partagez votre univers et touchez un nouveau public.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon mb-3">🎧</div>
+                <h4>Pour les auditeurs</h4>
+                <p>Découvrez de nouveaux sons, créez vos playlists et suivez vos artistes préférés.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon mb-3">🛡️</div>
+                <h4>Un espace sécurisé</h4>
+                <p>Vos données et vos créations sont protégées, dans un environnement moderne.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ⚡ Footer -->
+<footer>
+    <div class="container">
+        <p>© 2025 MusicProject — Créé avec ❤️ par ton équipe</p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
